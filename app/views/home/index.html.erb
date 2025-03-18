@@ -1,0 +1,92 @@
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #fafafa;
+    color: #1d1d1f;
+    line-height: 1.5;
+  }
+  
+  .apple-container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 120px 20px;
+  }
+  
+  h1 {
+    font-size: 48px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 20px;
+  }
+  
+  .subtitle {
+    font-size: 24px;
+    font-weight: 400;
+    color: #86868b;
+    max-width: 600px;
+    margin: 0 auto 50px;
+  }
+  
+  .apple-btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 980px;
+    font-size: 17px;
+    font-weight: 400;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-primary-apple {
+    background-color: #0071e3;
+    color: white;
+  }
+  
+  .btn-primary-apple:hover {
+    background-color: #0077ED;
+    color: white;
+  }
+  
+  .btn-secondary-apple {
+    background-color: rgba(0,0,0,0.05);
+    color: #1d1d1f;
+  }
+  
+  .btn-secondary-apple:hover {
+    background-color: rgba(0,0,0,0.1);
+  }
+  
+  .welcome-message {
+    font-size: 20px;
+    color: #86868b;
+    margin-bottom: 30px;
+  }
+  
+  .welcome-message strong {
+    color: #1d1d1f;
+  }
+  
+  .footer {
+    font-size: 12px;
+    color: #86868b;
+    margin-top: 80px;
+  }
+</style>
+
+<div class="apple-container text-center">
+  <h1>Sistema de Torneios de E-Sports</h1>
+  <p class="subtitle">Visualize, crie e participe de torneios de e-sports emocionantes em uma plataforma intuitiva.</p>
+  
+  <% if user_signed_in? %>
+    <p class="welcome-message">Bem-vindo, <strong><%= current_user.role %></strong></p>
+    <%= button_to 'Sair', destroy_user_session_path, method: :delete, class: 'apple-btn btn-secondary-apple' %>
+  <% else %>
+    <div>
+      <%= link_to 'Cadastro', new_user_registration_path, class: 'apple-btn btn-primary-apple' %>
+      <%= link_to 'Login', new_user_session_path, class: 'apple-btn btn-secondary-apple' %>
+    </div>
+  <% end %>
+  
+  <p class="footer">© <%= Date.today.year %> Sistema de Torneios de E-Sports. Todos os direitos reservados.</p>
+</div>
