@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  get "tournaments/my", to: "tournaments#my_tournaments", as: :my_tournaments
+  
+
   # Torneios
-  resources :tournaments, only: [:index, :new, :create, :show] do
+  resources :tournaments, only: [:index, :new, :create, :show, :edit, :update] do
+    get 'registrations', to: 'tournaments#registrations', as: :registrations
     # Inscrições dentro de torneios
     resources :registrations, only: [:create, :destroy]
   end
+  
 
   # Remover inscrição (fora da criação de torneio)
   resources :registrations, only: [:destroy]

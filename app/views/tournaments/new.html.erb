@@ -1,39 +1,394 @@
-<h1>Create a New Tournament</h1>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #fafafa;
+    color: #1d1d1f;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .apple-container {
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 80px 20px;
+  }
+  
+  h1 {
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  
+  .form-card {
+    background-color: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+  }
+  
+  .field {
+    margin-bottom: 24px;
+  }
+  
+  label {
+    display: block;
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #1d1d1f;
+  }
+  
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 17px;
+    border: 1px solid #d2d2d7;
+    border-radius: 12px;
+    background-color: #ffffff;
+    color: #1d1d1f;
+    transition: all 0.2s ease;
+    -webkit-appearance: none;
+  }
+  
+  input[type="text"]:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #0071e3;
+    box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.15);
+  }
+  
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  .description-container {
+    margin-bottom: 24px;
+  }
+  
+  .add-description-link {
+    display: inline-flex;
+    align-items: center;
+    color: #0071e3;
+    text-decoration: none;
+    font-size: 15px;
+    margin-top: 12px;
+  }
+  
+  .add-description-link:hover {
+    text-decoration: underline;
+  }
+  
+  .add-description-link::before {
+    content: "+";
+    display: inline-block;
+    margin-right: 6px;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  
+  .actions {
+    margin-top: 32px;
+    text-align: center;
+  }
+  
+  input[type="submit"] {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 980px;
+    font-size: 17px;
+    font-weight: 400;
+    background-color: #0071e3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 200px;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #0077ED;
+  }
+  
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    color: #0071e3;
+    text-decoration: none;
+    font-size: 15px;
+    margin-top: 24px;
+  }
+  
+  .back-link:hover {
+    text-decoration: underline;
+  }
+  
+  .back-link::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M8 1L3 6L8 11' stroke='%230071e3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+  }
+  
+  #error_explanation {
+    background-color: #fff2f2;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-left: 4px solid #ff3b30;
+  }
+  
+  #error_explanation h2 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #ff3b30;
+    margin-top: 0;
+    margin-bottom: 12px;
+    text-align: left;
+  }
+  
+  #error_explanation ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #1d1d1f;
+  }
+  
+  /* Header and profile styles */
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 24px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  .profile-menu {
+    position: relative;
+  }
+  
+  .profile-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #0071e3;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    transition: all 0.2s ease;
+  }
+  
+  .profile-button:hover {
+    background-color: #0077ED;
+  }
+  
+  .profile-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 220px;
+    padding: 8px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+  }
+  
+  .profile-menu.active .profile-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .user-email {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f2f2f7;
+    font-size: 14px;
+    color: #86868b;
+    word-break: break-all;
+  }
+  
+  .dropdown-item {
+    display: block;
+    padding: 12px 16px;
+    color: #1d1d1f;
+    text-decoration: none;
+    font-size: 15px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f5f5f7;
+  }
+  
+  .dropdown-item.logout {
+    color: #ff3b30;
+  }
+  
+  .login-button {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 980px;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #0071e3;
+    color: white;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  
+  .login-button:hover {
+    background-color: #0077ED;
+  }
+  
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 32px;
+    }
+    
+    .form-card {
+      padding: 24px;
+    }
+    
+    .header {
+      padding: 0 16px;
+    }
+  }
+</style>
 
-<%= form_with model: @tournament, local: true do |f| %>
-  <% if @tournament.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@tournament.errors.count, "error") %> prohibited this tournament from being saved:</h2>
-      <ul>
-        <% @tournament.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+<div class="header">
+  <% if user_signed_in? %>
+    <div class="profile-menu" id="profileMenu">
+      <button class="profile-button" id="profileButton">
+        <%= current_user.email.first.upcase %>
+      </button>
+      <div class="profile-dropdown">
+        <div class="user-email">
+          <%= current_user.email %>
+        </div>
+        <%= link_to "Meu Perfil", edit_user_registration_path, class: "dropdown-item" %>
+        <%= link_to "Meus Torneios", my_tournaments_path, class: "dropdown-item" %>
+        <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item logout" %>
+      </div>
     </div>
+  <% else %>
+    <%= link_to "Login", new_user_session_path, class: "login-button" %>
   <% end %>
+</div>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+<div class="apple-container">
+  <h1>Create a New Tournament</h1>
+  
+  <div class="form-card">
+    <%= form_with model: @tournament, local: true do |f| %>
+      <% if @tournament.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@tournament.errors.count, "error") %> prohibited this tournament from being saved:</h2>
+          <ul>
+            <% @tournament.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <%= f.label :name %>
+        <%= f.text_field :name, placeholder: "Enter tournament name" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :game %>
+        <%= f.text_field :game, placeholder: "Enter game name" %>
+      </div>
+
+      <!-- Controlador Stimulus para campos adicionais (ex: descrição) -->
+      <div class="description-container" data-controller="extra-fields">
+        <div data-extra-fields-target="fields" style="display: none;">
+          <%= f.label :description %>
+          <%= f.text_area :description, placeholder: "Enter a description for the tournament" %>
+        </div>
+
+        <%= link_to 'Add Description', '#', class: "add-description-link", data: { action: 'extra-fields#add' } %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Create Tournament" %>
+      </div>
+    <% end %>
   </div>
+  
+  <%= link_to 'Back', tournaments_path, class: "back-link" %>
+</div>
 
-  <div class="field">
-    <%= f.label :game %><br />
-    <%= f.text_field :game %>
-  </div>
-
-  <!-- Controlador Stimulus para campos adicionais (ex: descrição) -->
-  <div data-controller="extra-fields">
-    <div data-extra-fields-target="fields">
-      <%= f.text_area :description, placeholder: "Enter a description for the tournament" %>
-    </div>
-
-    <%= link_to 'Add Description', '#', data: { action: 'extra-fields#add' } %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Create Tournament" %>
-  </div>
-<% end %>
-
-<%= link_to 'Back', tournaments_path %>
+<script>
+  // Simple Stimulus controller implementation if not already defined
+  if (typeof window.Stimulus === 'undefined') {
+    document.addEventListener('DOMContentLoaded', () => {
+      const extraFieldsController = {
+        initialize() {
+          this.fieldsTarget = document.querySelector('[data-extra-fields-target="fields"]');
+          this.addButton = document.querySelector('[data-action="extra-fields#add"]');
+          
+          if (this.addButton) {
+            this.addButton.addEventListener('click', (e) => {
+              e.preventDefault();
+              this.add();
+            });
+          }
+        },
+        
+        add() {
+          if (this.fieldsTarget) {
+            this.fieldsTarget.style.display = 'block';
+            this.addButton.style.display = 'none';
+          }
+        }
+      };
+      
+      extraFieldsController.initialize();
+    });
+  }
+  
+  // Profile dropdown functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const profileButton = document.getElementById('profileButton');
+    const profileMenu = document.getElementById('profileMenu');
+    
+    if (profileButton && profileMenu) {
+      profileButton.addEventListener('click', function() {
+        profileMenu.classList.toggle('active');
+      });
+      
+      // Close the dropdown when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!profileMenu.contains(event.target)) {
+          profileMenu.classList.remove('active');
+        }
+      });
+    }
+  });
+</script>

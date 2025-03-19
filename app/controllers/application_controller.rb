@@ -8,15 +8,13 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    # Verifica a role do usuário e redireciona conforme necessário
-    if resource.role == 0
-      # Redireciona para a página de criação de torneios
-      new_tournament_path
-    elsif resource.role == 1
-      # Redireciona para a página de exibição de torneios (exemplo: o primeiro torneio ou um torneio específico)
-      tournaments_path
+    case resource.role
+    when 0
+      my_tournaments_path # Redireciona organizadores para seus torneios
+    when 1
+      tournaments_path # Redireciona participantes para a lista de torneios
     else
-      root_path # Caso o usuário não tenha uma role definida, redireciona para a página inicial
+      root_path # Redireciona para a home se a role for inválida
     end
   end
 end
