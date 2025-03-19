@@ -17,7 +17,7 @@ class TournamentsController < ApplicationController
   def create
     @tournament = current_user.tournaments.build(tournament_params)
     if @tournament.save
-      redirect_to @tournament, notice: "Torneio criado com sucesso!"
+      redirect_to my_tournaments_path, notice: "Torneio criado com sucesso!"
     else
       render :new
     end
