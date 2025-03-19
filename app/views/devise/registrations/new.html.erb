@@ -136,7 +136,7 @@
 </style>
 
 <div class="apple-container">
-  <h2>Sign up</h2>
+  <h2>Cadastrar</h2>
 
   <%= form_for(resource, as: resource_name, url: user_registration_path) do |f| %>
     <% if resource.errors.any? %>
@@ -152,19 +152,19 @@
 
     <div class="field">
       <%= f.label :name %>
-      <%= f.text_field :name, autofocus: true, placeholder: "Your full name" %>
+      <%= f.text_field :name, autofocus: true, placeholder: "Seu nome completo" %>
     </div>
 
     <div class="field">
       <%= f.label :email %>
-      <%= f.email_field :email, autocomplete: "email", placeholder: "your@email.com" %>
+      <%= f.email_field :email, autocomplete: "email", placeholder: "seu@email.com" %>
     </div>
 
     <div class="field">
       <%= f.label :password do %>
-        Password
+        Senha
         <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <em>Mínimo de caracteres: <%= @minimum_password_length %></em>
         <% end %>
       <% end %>
       <%= f.password_field :password, autocomplete: "new-password" %>
@@ -177,11 +177,11 @@
 
     <div class="field">
       <%= f.label :role %>
-      <%= f.select :role, options_for_select([['Organizer', 0], ['Participant', 1]], resource.role), { prompt: "Select your role" } %>
+      <%= f.select :role, options_for_select([['Organizer', 0], ['Participant', 1]], resource.role), { prompt: "Selecione seu perfil" } %>
     </div>
 
     <div class="actions">
-      <%= f.submit "Sign up" %>
+      <%= f.submit "Cadastrar" %>
     </div>
   <% end %>
 
